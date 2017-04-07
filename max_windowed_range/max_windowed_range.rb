@@ -7,8 +7,8 @@ def performance_test(size, count)
 
   Benchmark.benchmark(Benchmark::CAPTION, 9, Benchmark::FORMAT,
                       "Avg. Naive:  ", "Avg. Genius: ") do |b|
-    naive_cmr = b.report("Tot. Bad:  ") { run_naive_cmr(arrays_to_test) }
-    genius_cmr = b.report("Tot. Okay: ") { run_genius_cmr(arrays_to_test) }
+    naive_cmr = b.report("Tot. Naive:  ") { run_naive_cmr(arrays_to_test) }
+    genius_cmr = b.report("Tot. Genius: ") { run_genius_cmr(arrays_to_test) }
     [naive_cmr/count, genius_cmr/count]
   end
 end
@@ -20,14 +20,14 @@ end
 def run_naive_cmr(arrays)
   arrays.each do |array|
     array_to_test = array.dup
-    naive_current_max_range(array_to_test, 5)
+    naive_current_max_range(array_to_test, 1500)
   end
 end
 
 def run_genius_cmr(arrays)
   arrays.each do |array|
     array_to_test = array.dup
-    genius_current_max_range(array_to_test, 5)
+    genius_current_max_range(array_to_test, 1500)
   end
 end
 
@@ -37,10 +37,10 @@ def wait_for_keypress(prompt)
 end
 
 def run_performance_tests(multiplier = 5, rounds = 3)
-  [1, 10, 100, 1000, 10000].each do |size|
+  [1000, 10000].each do |size|
     size *= multiplier
     wait_for_keypress(
-      "Press any key to benchmark sorts for #{size} elements"
+      "Press any key to benchmark max windowed range for #{size} elements"
     )
     performance_test(size, rounds)
   end
